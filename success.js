@@ -123,11 +123,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // 2. Navigate to collection page
             // 3. Show confirmation
             
-            // Example: navigate to collection page
-            // window.location.href = 'collection.html';
-            
-            alert('Plaque ajoutée à votre collection !');
-            window.location.href = 'index.html';
+            // Navigate to collection page
+            window.location.href = 'collection.html';
         });
     }
     

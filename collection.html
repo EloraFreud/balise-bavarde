@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PFE Cursor App - Collection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#24242e">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background-primary: #ffffff;
+            --background-secondary: #f9f9fb;
+            --content-primary: #24242e;
+            --content-secondary: #3e3e4e;
+            --content-quaternary: #b5b5c4;
+            --border-primary: #d7d7e0;
+            --border-secondary: #eeeef1;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Red Hat Display', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-secondary);
+            overflow-x: hidden;
+        }
+        
+        .app-container {
+            max-width: 390px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--background-secondary);
+        }
+        
+        .font-content {
+            font-family: 'Red Hat Display', sans-serif;
+        }
+        
+        .font-system {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        .shadow-base {
+            box-shadow: 
+                6px 21px 9px 0px rgba(181, 181, 196, 0.01),
+                3px 12px 7px 0px rgba(181, 181, 196, 0.05),
+                2px 5px 5px 0px rgba(181, 181, 196, 0.08);
+        }
+        
+        .shadow-2xl {
+            box-shadow: 
+                6px 21px 9px 0px rgba(181, 181, 196, 0.06),
+                3px 12px 7px 0px rgba(181, 181, 196, 0.12),
+                3px 5px 5px 0px rgba(181, 181, 196, 0.16),
+                0px 1px 3px 0px rgba(181, 181, 196, 0.2);
+        }
+        
+        .shadow-navbar {
+            box-shadow: 
+                0px -138px 39px 0px rgba(215, 215, 224, 0),
+                0px -88px 35px 0px rgba(215, 215, 224, 0.01),
+                0px -50px 30px 0px rgba(215, 215, 224, 0.05),
+                0px -22px 22px 0px rgba(215, 215, 224, 0.09),
+                0px -6px 12px 0px rgba(215, 215, 224, 0.1);
+        }
+        
+        .collection-card {
+            position: relative;
+            width: 144px;
+            height: 140px;
+        }
+        
+        .collection-card-back {
+            position: absolute;
+            width: 100px;
+            height: 130px;
+            background: white;
+            border-radius: 16px;
+            padding: 12px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            box-shadow: 
+                6px 21px 9px 0px rgba(181, 181, 196, 0.06),
+                3px 12px 7px 0px rgba(181, 181, 196, 0.12),
+                3px 5px 5px 0px rgba(181, 181, 196, 0.16),
+                0px 1px 3px 0px rgba(181, 181, 196, 0.2);
+        }
+        
+        .collection-card-back.left {
+            left: 1.11px;
+            top: 2.54px;
+            transform: rotate(4deg);
+        }
+        
+        .collection-card-back.right {
+            right: 0;
+            top: 0;
+            transform: rotate(-6deg);
+        }
+        
+        .collection-card-plaque {
+            position: absolute;
+            left: 26px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 110px;
+            height: 110px;
+            background: white;
+            border: 1px solid var(--border-primary);
+            border-radius: 50%;
+            padding: 4px;
+            box-shadow: 
+                6px 21px 9px 0px rgba(181, 181, 196, 0.06),
+                3px 12px 7px 0px rgba(181, 181, 196, 0.12),
+                3px 5px 5px 0px rgba(181, 181, 196, 0.16),
+                0px 1px 3px 0px rgba(181, 181, 196, 0.2);
+            z-index: 2;
+        }
+        
+        .collection-card-plaque-inner {
+            width: 100%;
+            height: 100%;
+            border: 1.1px solid #eeeef1;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #f9f9fb;
+            position: relative;
+        }
+        
+        .collection-card-plaque.locked .collection-card-plaque-inner {
+            filter: blur(9px);
+        }
+        
+        .collection-card-plaque img {
+            width: 130%;
+            height: 130%;
+            object-fit: cover;
+            object-position: center;
+            position: absolute;
+            top: -43%;
+            left: -15%;
+        }
+        
+        .collection-card-plaque.locked::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+        }
+        
+        .lock-icon {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: 1px solid #eeeef1;
+            border-radius: 50%;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+        }
+        
+        .skeleton-line {
+            height: 11px;
+            border-radius: 4px;
+            background: linear-gradient(to right, #eeeef1, #f9f9fb);
+        }
+        
+        .skeleton-line.large {
+            height: 16px;
+        }
+        
+        .skeleton-line.colored {
+            background: linear-gradient(to right, rgba(248, 113, 113, 0.3), rgba(248, 113, 113, 0.06));
+        }
+        
+        .skeleton-line.yellow {
+            background: linear-gradient(to right, rgba(244, 208, 70, 0.3), rgba(244, 208, 70, 0.06));
+        }
+        
+        .skeleton-line.blue {
+            background: linear-gradient(to right, rgba(0, 180, 238, 0.3), rgba(0, 180, 238, 0.06));
+        }
+        
+        .skeleton-line.full {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-[#f9f9fb]">
+    <div class="app-container flex flex-col gap-px items-start overflow-hidden bg-[#f9f9fb]" data-name="Collection" data-node-id="27:4583">
+        <!-- Header Section -->
+        <div class="bg-[#f9f9fb] flex flex-col items-start relative shrink-0 w-full z-10" data-node-id="27:4584">
+            <!-- Search Bar -->
+            <div class="flex flex-col items-start p-5 relative shrink-0 w-full" data-node-id="27:4588">
+                <div class="flex flex-col gap-2 items-start p-0 relative shrink-0 w-full" data-name="SearchBar" data-node-id="27:4589">
+                    <div class="bg-white border border-[rgba(215,215,224,0.2)] flex gap-1 h-14 items-center pl-4 pr-3 py-3 relative rounded-xl shadow-base shrink-0 w-full" data-name="wrap" data-node-id="I27:4589;17370:21446">
+                        <div class="flex gap-0 items-center pl-0 pr-2 py-0 relative shrink-0" data-name="start adornment" data-node-id="I27:4589;17370:21447">
+                            <div class="flex gap-0 items-center justify-center p-0 relative shrink-0" data-name="_Icon" data-node-id="I27:4589;17370:21448">
+                                <div class="relative shrink-0 size-5">
+                                    <div class="absolute inset-[9.29%_9.37%_9.37%_9.29%]">
+                                        <img alt="Search" class="block max-w-none size-full" src="http://localhost:3845/assets/10eea4703efe1524bd8b91b46d643bd32271f289.svg" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="text" placeholder="Rechercher une ville..." class="basis-0 font-content font-normal grow leading-[1.6] min-h-0 min-w-0 overflow-ellipsis overflow-hidden relative shrink-0 text-sm text-[#24242e] outline-none border-0 bg-transparent" />
+                        <div class="bg-white border border-[#d7d7e0] flex gap-0 items-center justify-center p-2 relative rounded-md shrink-0 cursor-pointer" data-name="Icon Button" data-node-id="I27:4589;17401:10124">
+                            <div class="flex gap-0 items-center justify-center p-0 relative shrink-0" data-name="_Icon" data-node-id="I27:4589;17401:10124;3253:11130">
+                                <div class="relative shrink-0 size-4">
+                                    <div class="absolute inset-[18.73%_12.5%]">
+                                        <img alt="Filter" class="block max-w-none size-full" src="http://localhost:3845/assets/44de2f2f6a5ac2e011b1efcd948d896c1c4882a9.svg" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="basis-0 flex flex-col gap-4 grow items-start min-h-0 min-w-px overflow-x-hidden overflow-y-auto pb-5 pt-4 px-8 relative shrink-0 w-full" data-name="Button" data-node-id="27:4590">
+            <p class="font-content font-extrabold leading-[1.2] relative shrink-0 text-xl text-[#24242e] text-center whitespace-nowrap tracking-[-0.6px]" data-node-id="27:4591">
+                Paris
+            </p>
+            
+            <!-- Collection Grid Row 1 -->
+            <div class="flex items-start justify-between relative shrink-0 w-full" data-node-id="27:4592">
+                <!-- Card 1 - Unlocked (Red border) -->
+                <div class="collection-card" data-name="Collection" data-node-id="27:4593">
+                    <div class="collection-card-back left" style="border-color: #dc2626; border-width: 1px; border-style: solid;">
+                        <div class="skeleton-line large" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                    </div>
+                    <div class="collection-card-back right" style="border-color: #dc2626; border-width: 1px; border-style: solid;">
+                        <div class="skeleton-line colored full"></div>
+                    </div>
+                    <div class="collection-card-plaque">
+                        <div class="collection-card-plaque-inner">
+                            <img src="assets/Collection-0.png" alt="Plaque" />
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 2 - Unlocked (Yellow border) -->
+                <div class="collection-card" data-name="Collection" data-node-id="27:4594">
+                    <div class="collection-card-back left" style="border-color: #fcd34d; border-width: 1px; border-style: solid;">
+                        <div class="skeleton-line large" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                    </div>
+                    <div class="collection-card-back right" style="border-color: #fcd34d; border-width: 1px; border-style: solid;">
+                        <div class="skeleton-line yellow full"></div>
+                    </div>
+                    <div class="collection-card-plaque">
+                        <div class="collection-card-plaque-inner">
+                            <img src="assets/Collection-1.png" alt="Plaque" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Collection Grid Row 2 -->
+            <div class="flex items-start justify-between relative shrink-0 w-full" data-node-id="27:4595">
+                <!-- Card 3 - Unlocked (Blue border) -->
+                <div class="collection-card" data-name="Collection" data-node-id="27:4596">
+                    <div class="collection-card-back left" style="border-color: #36adf9; border-width: 1px; border-style: solid;">
+                        <div class="skeleton-line large" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                    </div>
+                    <div class="collection-card-back right" style="border-color: #36adf9; border-width: 1px; border-style: solid;">
+                        <div class="skeleton-line blue full"></div>
+                    </div>
+                    <div class="collection-card-plaque">
+                        <div class="collection-card-plaque-inner">
+                            <img src="assets/Collection-2.png" alt="Plaque" />
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 4 - Locked -->
+                <div class="collection-card" data-name="Collection" data-node-id="27:4597">
+                    <div class="collection-card-back left" style="border-color: #d7d7e0; border-width: 1px; border-style: solid;">
+                        <div class="skeleton-line large" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                    </div>
+                    <div class="collection-card-back right" style="border-color: #d7d7e0; border-width: 1px; border-style: solid;">
+                        <div class="skeleton-line full"></div>
+                    </div>
+                    <div class="collection-card-plaque locked">
+                        <div class="collection-card-plaque-inner">
+                            <img src="assets/Collection-3.png" alt="Plaque" />
+                        </div>
+                        <div class="lock-icon">
+                            <img src="http://localhost:3845/assets/451c00b45d1f31a886485b28f35e97ae8010c3c4.svg" alt="Lock" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Collection Grid Row 3 -->
+            <div class="flex items-start justify-between relative shrink-0 w-full" data-node-id="27:4598">
+                <!-- Card 5 - Locked -->
+                <div class="collection-card" data-name="Collection" data-node-id="27:4599">
+                    <div class="collection-card-back left" style="border-color: #d7d7e0; border-width: 1px; border-style: solid;">
+                        <div class="skeleton-line large" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                    </div>
+                    <div class="collection-card-back right" style="border-color: #d7d7e0; border-width: 1px; border-style: solid;">
+                        <div class="skeleton-line full"></div>
+                    </div>
+                    <div class="collection-card-plaque locked">
+                        <div class="collection-card-plaque-inner">
+                            <img src="assets/Collection-4.png" alt="Plaque" />
+                        </div>
+                        <div class="lock-icon">
+                            <img src="http://localhost:3845/assets/451c00b45d1f31a886485b28f35e97ae8010c3c4.svg" alt="Lock" />
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 6 - Locked -->
+                <div class="collection-card" data-name="Collection" data-node-id="27:4600">
+                    <div class="collection-card-back left" style="border-color: #d7d7e0; border-width: 1px; border-style: solid;">
+                        <div class="skeleton-line large" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                    </div>
+                    <div class="collection-card-back right" style="border-color: #d7d7e0; border-width: 1px; border-style: solid;">
+                        <div class="skeleton-line full"></div>
+                    </div>
+                    <div class="collection-card-plaque locked">
+                        <div class="collection-card-plaque-inner">
+                            <img src="assets/Collection-5.png" alt="Plaque" />
+                        </div>
+                        <div class="lock-icon">
+                            <img src="http://localhost:3845/assets/451c00b45d1f31a886485b28f35e97ae8010c3c4.svg" alt="Lock" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Collection Grid Row 4 -->
+            <div class="flex items-start justify-between relative shrink-0 w-full" data-node-id="27:4601">
+                <!-- Card 7 - Locked -->
+                <div class="collection-card" data-name="Collection" data-node-id="27:4602">
+                    <div class="collection-card-back left" style="border-color: #d7d7e0; border-width: 1px; border-style: solid;">
+                        <div class="skeleton-line large" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                    </div>
+                    <div class="collection-card-back right" style="border-color: #d7d7e0; border-width: 1px; border-style: solid;">
+                        <div class="skeleton-line full"></div>
+                    </div>
+                    <div class="collection-card-plaque locked">
+                        <div class="collection-card-plaque-inner">
+                            <img src="assets/Collection-6.png" alt="Plaque" />
+                        </div>
+                        <div class="lock-icon">
+                            <img src="http://localhost:3845/assets/451c00b45d1f31a886485b28f35e97ae8010c3c4.svg" alt="Lock" />
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 8 - Locked -->
+                <div class="collection-card" data-name="Collection" data-node-id="27:4603">
+                    <div class="collection-card-back left" style="border-color: #d7d7e0; border-width: 1px; border-style: solid;">
+                        <div class="skeleton-line large" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                        <div class="skeleton-line" style="width: 66px;"></div>
+                    </div>
+                    <div class="collection-card-back right" style="border-color: #d7d7e0; border-width: 1px; border-style: solid;">
+                        <div class="skeleton-line full"></div>
+                    </div>
+                    <div class="collection-card-plaque locked">
+                        <div class="collection-card-plaque-inner">
+                            <img src="assets/Collection-7.png" alt="Plaque" />
+                        </div>
+                        <div class="lock-icon">
+                            <img src="http://localhost:3845/assets/451c00b45d1f31a886485b28f35e97ae8010c3c4.svg" alt="Lock" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- NavBar -->
+        <div class="bg-white h-[84px] relative rounded-t-3xl shadow-navbar shrink-0 w-full z-20" data-name="NavBar" data-node-id="27:4604" id="bottomNavBar">
+            <div class="absolute flex items-center left-0 pb-4 pt-3 px-6 right-0 rounded-t-2xl top-[1.99px]" data-name="Menu" data-node-id="27:4605">
+                <div class="basis-0 flex grow items-center justify-between min-h-px min-w-px relative shrink-0" data-name="List" data-node-id="27:4606">
+                    <!-- Carte -->
+                    <a href="index.html" class="flex flex-col gap-0.5 items-center relative shrink-0 w-16 cursor-pointer nav-item" data-name="Item" data-node-id="27:4607">
+                        <div class="flex items-center justify-center relative shrink-0 size-8" data-name="Icon Container" data-node-id="I27:4607;17385:11607">
+                            <div class="relative shrink-0 size-6" data-name="MapTrifold" data-node-id="I27:4607;17385:11697">
+                                <div class="absolute inset-[12.5%_9.38%]" data-name="Vector" data-node-id="I27:4607;17385:11697;7485:2797">
+                                    <img alt="Map" class="block max-w-none size-full" src="http://localhost:3845/assets/2fa909d4484b816c722968f091eb590abb37b0b2.svg" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col font-content font-normal justify-center leading-none relative shrink-0 text-[0px] text-[#24242e] whitespace-nowrap tracking-[-0.12px]" data-node-id="I27:4607;17385:11609">
+                            <p class="font-bold leading-[1.5] text-[#b5b5c4] text-xs">Carte</p>
+                        </div>
+                    </a>
+                    
+                    <!-- Scan -->
+                    <a href="scan.html" class="flex flex-col gap-0.5 items-center relative shrink-0 w-16 cursor-pointer nav-item" data-name="Item" data-node-id="27:4608">
+                        <div class="flex items-center justify-center relative shrink-0 size-8" data-name="Icon Container" data-node-id="I27:4608;17385:11596">
+                            <div class="relative shrink-0 size-6" data-name="Scan" data-node-id="I27:4608;17385:11684">
+                                <div class="absolute inset-[12.5%]" data-name="Vector" data-node-id="I27:4608;17385:11684;7485:9774">
+                                    <img alt="Scan" class="block max-w-none size-full" src="http://localhost:3845/assets/4ba23076efd2b16b5d5571dc06b57b075829dff8.svg" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col font-content font-normal justify-center leading-none relative shrink-0 text-[0px] whitespace-nowrap tracking-[-0.12px]" data-node-id="I27:4608;17385:11598">
+                            <p class="font-bold leading-[1.5] text-[#b5b5c4] text-xs">Scan</p>
+                        </div>
+                    </a>
+                    
+                    <!-- Collection (Active) -->
+                    <div class="flex flex-col gap-0.5 items-center relative shrink-0 w-16 cursor-pointer nav-item" data-name="Item" data-node-id="27:4609">
+                        <div class="flex items-center justify-center relative shrink-0 size-8" data-name="Icon Container" data-node-id="I27:4609;17385:11607">
+                            <div class="relative shrink-0 size-6" data-name="CircleHalf" data-node-id="I27:4609;17385:11697">
+                                <div class="absolute inset-[9.38%_9.38%_9.37%_9.37%]" data-name="Vector" data-node-id="I27:4609;17385:11697;7485:5870">
+                                    <img alt="Collection" class="block max-w-none size-full" src="http://localhost:3845/assets/eff04f126cbd4449a91ca43a0abfefd33383123a.svg" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col font-content font-normal justify-center leading-none relative shrink-0 text-[0px] whitespace-nowrap tracking-[-0.12px]" data-node-id="I27:4609;17385:11609">
+                            <p class="font-bold leading-[1.5] text-[#24242e] text-xs">Collection</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Profil -->
+                    <div class="flex flex-col gap-0.5 items-center relative shrink-0 w-16 cursor-pointer nav-item" data-name="Item" data-node-id="27:4610">
+                        <div class="flex items-center justify-center relative shrink-0 size-8" data-name="Icon Container" data-node-id="I27:4610;17385:11607">
+                            <div class="flex gap-0 items-center justify-center p-0 relative shrink-0" data-name="_Icon" data-node-id="I27:4610;17385:11697">
+                                <div class="relative shrink-0 size-6" data-name="UserCircle" data-node-id="I27:4610;17385:11697;1479:9006">
+                                    <div class="absolute inset-[9.38%_9.38%_9.37%_9.37%]" data-name="Vector" data-node-id="I27:4610;17385:11697;1479:9006;7485:16224">
+                                        <img alt="Profile" class="block max-w-none size-full" src="http://localhost:3845/assets/f238c17531a369020dc4bde2e5098b48e6efa041.svg" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col font-content font-normal justify-center leading-none relative shrink-0 text-[0px] whitespace-nowrap tracking-[-0.12px]" data-node-id="I27:4610;17385:11609">
+                            <p class="font-system font-bold leading-[1.5] text-[#b5b5c4] text-xs">Profil</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="collection.js"></script>
+</body>
+</html>
+
