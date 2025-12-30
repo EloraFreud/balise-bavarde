@@ -29,6 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
             bottomNavBar.style.display = 'none';
         }
         
+        // Camera placeholder will take full height of its container automatically
+        
         // Handle back button
         if (backButton) {
             backButton.addEventListener('click', function() {
@@ -228,16 +230,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     inset: 0;
                     background: #f9f9fb;
                     z-index: 1000;
-                    overflow-y: auto;
+                    overflow: hidden;
                 }
                 
                 .plaque-info-container {
-                    min-height: 100vh;
+                    height: 100vh;
                     display: flex;
                     flex-direction: column;
                     max-width: 390px;
                     margin: 0 auto;
                     background: #f9f9fb;
+                    overflow: hidden;
                 }
                 
                 .plaque-info-header {
@@ -280,6 +283,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     padding: 24px;
                     position: relative;
                     z-index: 1;
+                    min-height: 0;
+                    overflow-y: none;
                 }
                 
                 .plaque-info-card {
@@ -288,11 +293,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     border-radius: 24px;
                     padding: 96px 24px 24px;
                     width: 100%;
+                    height: 100%;
                     box-shadow: 
                         6px 21px 9px 0px rgba(181, 181, 196, 0.01),
                         2px 5px 5px 0px rgba(181, 181, 196, 0.08);
                     position: relative;
                     z-index: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    flex-grow: 1;
                 }
                 
                 .plaque-info-icon-absolute {
@@ -333,6 +343,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     flex-direction: column;
                     gap: 12px;
                     margin-bottom: 16px;
+                    width: 100%;
                 }
                 
                 .plaque-info-title {
@@ -344,6 +355,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     text-align: center;
                     letter-spacing: -0.6px;
                     margin: 0;
+                    flex-shrink: 0;
                 }
                 
                 .plaque-info-description {
@@ -353,11 +365,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     line-height: 1.6;
                     color: #3e3e4e;
                     letter-spacing: -0.32px;
+                    overflow-y: auto;
                 }
-                
-                .plaque-info-description p {
-                    margin: 0 0 1em 0;
-                }
+            
                 
                 .plaque-info-audio {
                     background: white;
@@ -394,8 +404,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 .plaque-info-footer {
-                    padding: 32px 24px;
+                    padding: 24px 24px 32px 24px;
                     background: #f9f9fb;
+                    flex-shrink: 0;
+                    position: relative;
+                    z-index: 2;
                 }
                 
                 .plaque-info-next {

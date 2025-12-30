@@ -130,23 +130,6 @@
     <div class="app-container flex flex-col gap-px items-start overflow-hidden bg-[#f9f9fb]" data-name="Scan" data-node-id="6:797">
         <!-- Header Section -->
         <div class="bg-[#f9f9fb] flex flex-col items-start relative shrink-0 w-full z-10" data-node-id="6:798">
-            <!-- System Bar - iOS -->
-            <div class="h-[44px] relative shrink-0 w-full" data-name="System Bar - iOS/Black" data-node-id="6:799" id="systemBar">
-                <div class="absolute flex flex-col font-system font-semibold justify-center leading-none left-[33px] text-[#15181f] text-base whitespace-nowrap top-1/2 -translate-y-1/2 tracking-[0.2px]" data-node-id="I6:799;17233:38615">
-                    <p class="leading-[1.4]">9:41</p>
-                </div>
-                <div class="absolute h-[10px] right-[86px] top-1/2 -translate-y-1/2 w-[18px]" data-name="Mobile Signal" data-node-id="I6:799;17233:38616">
-                    <img alt="Mobile Signal" class="block max-w-none size-full" src="http://localhost:3845/assets/3be1d84c217ea5d69fbf5b8c058423a8c3adeae5.svg" />
-                </div>
-                <div class="absolute h-[10.966px] right-[65.73px] top-1/2 -translate-y-1/2 w-[15.272px]" data-name="Wifi" data-node-id="I6:799;17233:38622">
-                    <img alt="Wifi" class="block max-w-none size-full" src="http://localhost:3845/assets/21f5172b26530ba567c304a744c2ebd69e54d66f.svg" />
-                </div>
-                <div class="absolute contents right-[33.02px] top-1/2 -translate-y-1/2" data-name="Battery" data-node-id="I6:799;17233:38627">
-                    <div class="absolute h-[13px] right-[33.02px] top-1/2 -translate-y-1/2 w-[26.978px]" data-name="Battery" data-node-id="I6:799;17233:38628">
-                        <img alt="Battery" class="block max-w-none size-full" src="http://localhost:3845/assets/df6506c3dcb97260763eabb9f9d03cb855b0089d.svg" />
-                    </div>
-                </div>
-            </div>
             
             <!-- Header with back button and title (shown when from modal) -->
             <div class="flex items-center justify-between pb-2 pt-5 px-5 relative shrink-0 w-full hidden" id="scanHeaderFromModal">
@@ -168,7 +151,7 @@
         
         <!-- Main Content Area - Camera Placeholder -->
         <div class="basis-0 flex flex-col grow items-start min-h-0 min-w-px pb-5 pt-6 px-6 relative shrink-0 w-full" data-name="Main" data-node-id="6:802">
-            <div class="basis-0 border border-[#d7d7e0] grow min-h-0 min-w-px relative rounded-3xl shrink-0 w-full camera-placeholder" data-node-id="6:803">
+            <div class="border border-[#d7d7e0] relative rounded-3xl shrink-0 w-full h-full camera-placeholder" data-node-id="6:803" id="cameraPlaceholder">
                 <div aria-hidden="true" class="absolute inset-0 pointer-events-none rounded-3xl">
                     <img alt="Camera Placeholder" class="absolute max-w-none object-center object-cover rounded-3xl size-full opacity-0" src="http://localhost:3845/assets/ece298d0ec2c16f10310d45724b276a6035cb503.png" />
                 </div>
@@ -176,7 +159,7 @@
         </div>
         
         <!-- Scan Button Container -->
-        <div class="flex items-center justify-center absolute bottom-8 left-0 right-0 px-5 w-full" data-name="Container" data-node-id="6:804">
+        <div class="flex items-center justify-center pb-6 pt-2 px-5 relative shrink-0 w-full" data-name="Container" data-node-id="6:804">
             <div class="scan-button-outer cursor-pointer hover:opacity-90 transition-opacity" data-name="Center" data-node-id="6:805" id="scanButton">
                 <div class="scan-button-inner" data-name="Button" data-node-id="6:806"></div>
             </div>

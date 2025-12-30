@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PFE Cursor App - Félicitations</title>
+    <title>PFE Cursor App - Essaie encore</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
     <link rel="manifest" href="/manifest.json">
@@ -77,20 +77,6 @@
             z-index: 0;
         }
         
-        .arch-shape {
-            position: absolute;
-            top: 150px;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            width: 100%;
-            background: var(--background-primary, #ffffff);
-            border: 1px solid var(--border-primary, #d7d7e0);
-            border-radius: 240px 240px 0 0;
-            box-shadow: 0px 4px 134px 0px rgba(0, 0, 0, 0.09);
-            z-index: 1;
-        }
-        
         .confetti-container {
             position: absolute;
             inset: 0;
@@ -107,6 +93,20 @@
             height: 100%;
             z-index: 1;
             pointer-events: none;
+        }
+        
+        .arch-shape {
+            position: absolute;
+            top: 150px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            background: var(--background-primary, #ffffff);
+            border: 1px solid var(--border-primary, #d7d7e0);
+            border-radius: 240px 240px 0 0;
+            box-shadow: 0px 4px 134px 0px rgba(0, 0, 0, 0.09);
+            z-index: 1;
         }
         
         .success-badge {
@@ -185,7 +185,7 @@
     </style>
 </head>
 <body class="bg-white">
-    <div class="app-container flex flex-col gap-px items-start overflow-hidden bg-white" data-name="Succès" data-node-id="15:3004">
+    <div class="app-container flex flex-col gap-px items-start overflow-hidden bg-white" data-name="Échec" data-node-id="15:3004">
         <!-- Background Shape -->
         <div class="background-shape"></div>
         
@@ -202,8 +202,8 @@
         </div>
         
         <!-- Main Content -->
-        <div class="basis-0 flex flex-col grow items-center justify-end min-h-0 min-w-px pb-8 pt-[172px] px-8 relative shrink-0 w-full z-10" data-name="Content" data-node-id="15:3010">
-            <div class="flex flex-col gap-[80px] items-center relative shrink-0 w-full" data-name="Frame 48096048" data-node-id="15:3011">
+        <div class="basis-0 flex flex-col grow items-center justify-between min-h-0 min-w-px pb-8 pt-[172px] px-8 relative shrink-0 w-full z-10" data-name="Content" data-node-id="15:3010">
+            <div class="flex flex-col gap-[64px] items-center relative shrink-0 w-full" data-name="Frame 48096048" data-node-id="15:3011">
                 <!-- Badge -->
                 <div class="flex items-center justify-center" data-name="Button" data-node-id="15:3012">
                     <div class="success-badge" data-name="Text container" data-node-id="15:3013">
@@ -217,24 +217,25 @@
                 
                 <!-- Text -->
                 <div class="flex flex-col gap-[10px] items-center justify-center px-8 py-0 relative shrink-0 text-center w-full" data-name="Top" data-node-id="15:3017">
-                    <h1 class="font-content font-extrabold leading-[1.1] relative shrink-0 text-[42px] text-[#24242e] text-center tracking-[-0.84px] w-full" data-node-id="15:3018">
-                        Félicitations !
+                    <h1 class="font-content font-extrabold leading-[1.1] relative shrink-0 text-[42px] text-[#24242e] text-center tracking-[-0.84px] w-full whitespace-nowrap" data-node-id="15:3018">
+                        Essaie encore !
                     </h1>
                     <p class="font-content font-normal leading-[1.6] relative shrink-0 text-base text-[#6d6d8a] text-center tracking-[-0.32px] w-full" data-node-id="15:3019">
-                        Tu as gagné la plaque du <span class="font-bold">soldat inconnu</span> !
+                        La réponse est incorrecte, tu ne peux pas encore ajouter cette plaque à ta collection...
                     </p>
                 </div>
             </div>
             
             <!-- Bottom Button -->
-            <div class="flex flex-col items-center justify-center w-full mt-[128px]" data-name="Button" data-node-id="15:3020">
-                <button class="success-button" id="addToCollectionButton">
-                    Ajouter à ma collection
+            <div class="flex flex-col items-center justify-center w-full" data-name="Button" data-node-id="15:3020">
+                <button class="success-button" id="retryButton">
+                    Réessayer
                 </button>
             </div>
         </div>
     </div>
     
-    <script src="success.js"></script>
+    <script src="failure.js"></script>
 </body>
 </html>
+
