@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PFE Cursor App - Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#24242e">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background-primary: #ffffff;
+            --background-secondary: #f9f9fb;
+            --content-primary: #24242e;
+            --content-secondary: #3e3e4e;
+            --content-quaternary: #b5b5c4;
+            --border-primary: #d7d7e0;
+            --border-secondary: #eeeef1;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Red Hat Display', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-secondary);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            width: 100%;
+        }
+        
+        .app-container {
+            width: 390px;
+            max-width: 100%;
+            height: 100vh;
+            max-height: 844px;
+            position: relative;
+            margin: 0 auto;
+            background: var(--background-secondary);
+            overflow-y: auto;
+        }
+        
+        @media (max-width: 390px) {
+            .app-container {
+                width: 100%;
+                max-height: 100vh;
+            }
+        }
+        
+        .font-content {
+            font-family: 'Red Hat Display', sans-serif;
+        }
+        
+        .font-system {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        .shadow-sm {
+            box-shadow: 
+                6px 21px 9px 0px rgba(181, 181, 196, 0.01),
+                2px 5px 5px 0px rgba(181, 181, 196, 0.08);
+        }
+        
+        .quiz-answer {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .quiz-answer:hover {
+            transform: translateY(-2px);
+        }
+        
+        .quiz-answer.selected {
+            background: linear-gradient(181.96deg, #6d6d8a 7.38%, #49485c 92.62%);
+            border-color: #49485c;
+        }
+        
+        .quiz-answer.selected p {
+            color: white !important;
+        }
+        
+        .quiz-button {
+            background: linear-gradient(181.39deg, #24242e 7.38%, #09090b 92.62%);
+            border: 1px solid #131217;
+            border-radius: 16px;
+            padding: 12px 20px;
+            color: white;
+            font-family: 'Red Hat Display', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 0.28px;
+            text-transform: uppercase;
+            width: 100%;
+            cursor: pointer;
+            position: relative;
+            box-shadow: inset 0px 2px 0px 0px rgba(181, 181, 196, 0.16);
+            transition: opacity 0.2s;
+        }
+        
+        .quiz-button:hover:not(:disabled) {
+            opacity: 0.9;
+        }
+        
+        .quiz-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #b5b5c4;
+            border-color: #b5b5c4;
+        }
+    </style>
+</head>
+<body class="bg-[#f9f9fb]">
+    <div class="app-container flex flex-col gap-px items-start overflow-hidden bg-[#f9f9fb]" data-name="Quiz" data-node-id="11:209">
+        <!-- Header Section -->
+        <div class="bg-[#f9f9fb] flex flex-col items-start relative shrink-0 w-full z-10" data-node-id="11:210">
+            <!-- System Bar - iOS -->
+            <div class="h-[44px] relative shrink-0 w-full" data-name="System Bar - iOS/Black" data-node-id="11:211">
+                <div class="absolute flex flex-col font-system font-semibold justify-center leading-none left-[33px] text-[#15181f] text-base whitespace-nowrap top-1/2 -translate-y-1/2 tracking-[0.2px]" data-node-id="I11:211;17233:38615">
+                    <p class="leading-[1.4]">9:41</p>
+                </div>
+                <div class="absolute h-[10px] right-[86px] top-1/2 -translate-y-1/2 w-[18px]" data-name="Mobile Signal" data-node-id="I11:211;17233:38616">
+                    <img alt="Mobile Signal" class="block max-w-none size-full" src="http://localhost:3845/assets/3be1d84c217ea5d69fbf5b8c058423a8c3adeae5.svg" />
+                </div>
+                <div class="absolute h-[10.966px] right-[65.73px] top-1/2 -translate-y-1/2 w-[15.272px]" data-name="Wifi" data-node-id="I11:211;17233:38622">
+                    <img alt="Wifi" class="block max-w-none size-full" src="http://localhost:3845/assets/21f5172b26530ba567c304a744c2ebd69e54d66f.svg" />
+                </div>
+                <div class="absolute contents right-[33.02px] top-1/2 -translate-y-1/2" data-name="Battery" data-node-id="I11:211;17233:38627">
+                    <div class="absolute h-[13px] right-[33.02px] top-1/2 -translate-y-1/2 w-[26.978px]" data-name="Battery" data-node-id="I11:211;17233:38628">
+                        <img alt="Battery" class="block max-w-none size-full" src="http://localhost:3845/assets/df6506c3dcb97260763eabb9f9d03cb855b0089d.svg" />
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Header with close button -->
+            <div class="flex items-center justify-between pb-0 pt-5 px-5 relative shrink-0 w-full" data-node-id="11:214">
+                <div class="flex gap-0 items-center justify-center p-3 rounded-lg shrink-0"></div>
+                <button class="bg-white border border-[#eeeef1] flex gap-0 items-center justify-center p-3 relative rounded-lg shrink-0 cursor-pointer hover:bg-gray-50 transition-colors" id="closeQuizBtn">
+                    <div class="flex gap-0 items-center justify-center p-0 relative shrink-0">
+                        <div class="relative shrink-0 size-4">
+                            <div class="absolute inset-[18.75%]">
+                                <img alt="Close" class="block max-w-none size-full" src="http://localhost:3845/assets/8241868549c082ec4b85ccb0abf805e6a3eb5052.svg" />
+                            </div>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="basis-0 flex flex-col gap-[72px] grow items-center min-h-0 min-w-px pb-5 pt-[60px] px-8 relative shrink-0 w-full" data-name="Main" data-node-id="11:217">
+            <!-- Question Container -->
+            <div class="bg-[#24242e] flex flex-col items-center relative rounded-3xl shrink-0 w-full z-[2]" data-node-id="11:218">
+                <div class="flex gap-0 items-center justify-center pb-[10px] pt-3 px-3 relative rounded-lg shrink-0 w-full" data-name="Button" data-node-id="11:219">
+                    <p class="font-content font-semibold leading-[1.4] relative shrink-0 text-xs text-white whitespace-nowrap tracking-[0.72px] uppercase" data-node-id="11:220">
+                        Question
+                    </p>
+                </div>
+                <div class="bg-white border-4 border-[#24242e] flex flex-col items-start justify-center p-8 relative rounded-3xl shadow-sm shrink-0 w-full" data-name="Web/Alert" data-node-id="11:223">
+                    <p class="font-content font-extrabold leading-[1.2] min-w-full relative shrink-0 text-xl text-[#24242e] text-center tracking-[-0.6px] w-[min-content]" data-node-id="11:224" id="quizQuestion">
+                        À quelle heure la flamme du Soldat inconnu est-elle ravivée chaque jour ?
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Answers -->
+            <div class="flex flex-col gap-3 items-start px-4 py-0 relative shrink-0 w-full z-[1]" data-node-id="11:227">
+                <div class="quiz-answer bg-white border border-[#d7d7e0] flex gap-3 items-center justify-center p-4 relative rounded-2xl shadow-sm shrink-0 w-full" data-name="Adresse" data-node-id="11:228" data-answer="11h00">
+                    <div class="basis-0 flex flex-col gap-1 grow items-center justify-center min-h-px min-w-px relative shrink-0" data-name="Content" data-node-id="11:229">
+                        <p class="font-content font-bold leading-[1.6] relative shrink-0 text-base text-[#24242e] whitespace-nowrap tracking-[-0.32px]">
+                            11h00
+                        </p>
+                    </div>
+                </div>
+                <div class="quiz-answer bg-white border border-[#d7d7e0] flex gap-3 items-center justify-center p-4 relative rounded-2xl shadow-sm shrink-0 w-full" data-name="Adresse" data-node-id="11:239" data-answer="14h30">
+                    <div class="basis-0 flex flex-col gap-1 grow items-center justify-center min-h-px min-w-px relative shrink-0" data-name="Content" data-node-id="11:240">
+                        <p class="font-content font-bold leading-[1.6] relative shrink-0 text-base text-[#24242e] whitespace-nowrap tracking-[-0.32px]">
+                            14h30
+                        </p>
+                    </div>
+                </div>
+                <div class="quiz-answer bg-white border border-[#d7d7e0] flex gap-3 items-center justify-center p-4 relative rounded-2xl shadow-sm shrink-0 w-full" data-name="Adresse" data-node-id="11:250" data-answer="18h30">
+                    <div class="basis-0 flex flex-col gap-1 grow items-center justify-center min-h-px min-w-px relative shrink-0" data-name="Content" data-node-id="11:251">
+                        <p class="font-content font-bold leading-[1.6] relative shrink-0 text-base text-[#24242e] whitespace-nowrap tracking-[-0.32px]">
+                            18h30
+                        </p>
+                    </div>
+                </div>
+                <div class="quiz-answer bg-white border border-[#d7d7e0] flex gap-3 items-center justify-center p-4 relative rounded-2xl shadow-sm shrink-0 w-full" data-name="Adresse" data-node-id="11:261" data-answer="20h00">
+                    <div class="basis-0 flex flex-col gap-1 grow items-center justify-center min-h-px min-w-px relative shrink-0" data-name="Content" data-node-id="11:262">
+                        <p class="font-content font-bold leading-[1.6] relative shrink-0 text-base text-[#24242e] whitespace-nowrap tracking-[-0.32px]">
+                            20h00
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Button -->
+        <div class="flex flex-col items-center justify-center px-6 py-8 relative shrink-0 w-full" data-name="Button" data-node-id="11:272">
+            <button class="quiz-button" id="nextQuizButton" disabled>
+                Suivant
+            </button>
+        </div>
+    </div>
+    
+    <script src="quiz.js"></script>
+</body>
+</html>
+

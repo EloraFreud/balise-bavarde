@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PFE Cursor App - Félicitations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#24242e">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background-primary: #ffffff;
+            --background-secondary: #f9f9fb;
+            --content-primary: #24242e;
+            --content-secondary: #3e3e4e;
+            --content-quaternary: #b5b5c4;
+            --border-primary: #d7d7e0;
+            --border-secondary: #eeeef1;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Red Hat Display', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .app-container {
+            width: 390px;
+            max-width: 100%;
+            height: 100vh;
+            max-height: 844px;
+            position: relative;
+            margin: 0 auto;
+            background: white;
+            overflow: hidden;
+        }
+        
+        .background-shape {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1199.25px;
+            height: 1199.25px;
+            border-radius: 50%;
+            background: #f9f9fb;
+            z-index: 0;
+        }
+        
+        @media (max-width: 390px) {
+            .app-container {
+                width: 100%;
+                max-height: 100vh;
+            }
+        }
+        
+        .font-content {
+            font-family: 'Red Hat Display', sans-serif;
+        }
+        
+        .font-system {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        .confetti-container {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        #tsparticles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .success-badge {
+            width: 198px;
+            height: 198px;
+            border: 1px solid #d7d7e0;
+            border-radius: 50%;
+            background: white;
+            padding: 4px;
+            position: relative;
+            box-shadow: 
+                6px 21px 9px 0px rgba(181, 181, 196, 0.06),
+                3px 12px 7px 0px rgba(181, 181, 196, 0.12),
+                3px 5px 5px 0px rgba(181, 181, 196, 0.16),
+                0px 1px 3px 0px rgba(181, 181, 196, 0.2);
+        }
+        
+        .success-badge-inner {
+            width: 190px;
+            height: 190px;
+            border: 4.75px solid #eeeef1;
+            border-radius: 4750px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f9f9fb;
+            position: relative;
+        }
+        
+        .success-badge img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .success-button {
+            background: linear-gradient(181.39deg, #24242e 7.38%, #09090b 92.62%);
+            border: 1px solid #131217;
+            border-radius: 16px;
+            padding: 12px 20px;
+            color: white;
+            font-family: 'Red Hat Display', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 0.28px;
+            text-transform: uppercase;
+            width: 100%;
+            cursor: pointer;
+            position: relative;
+            box-shadow: inset 0px 2px 0px 0px rgba(181, 181, 196, 0.16);
+            transition: opacity 0.2s;
+        }
+        
+        .success-button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div class="app-container flex flex-col gap-px items-start overflow-hidden bg-white" data-name="Succès" data-node-id="15:3004">
+        <!-- Background Shape -->
+        <div class="background-shape"></div>
+        
+        <!-- Confetti Background - Animation -->
+        <div class="confetti-container">
+            <div id="tsparticles"></div>
+        </div>
+        
+        <!-- Header Section -->
+        <div class="bg-transparent flex flex-col items-start relative shrink-0 w-full z-10" data-node-id="15:3010">
+            <!-- System Bar - iOS -->
+            <div class="h-[44px] relative shrink-0 w-full" data-name="System Bar - iOS/Black" data-node-id="12:319">
+                <div class="absolute flex flex-col font-system font-semibold justify-center leading-none left-[33px] text-[#15181f] text-base whitespace-nowrap top-1/2 -translate-y-1/2 tracking-[0.2px]">
+                    <p class="leading-[1.4]">9:41</p>
+                </div>
+                <div class="absolute h-[10px] right-[86px] top-1/2 -translate-y-1/2 w-[18px]">
+                    <img alt="Mobile Signal" class="block max-w-none size-full" src="http://localhost:3845/assets/3be1d84c217ea5d69fbf5b8c058423a8c3adeae5.svg" />
+                </div>
+                <div class="absolute h-[10.966px] right-[65.73px] top-1/2 -translate-y-1/2 w-[15.272px]">
+                    <img alt="Wifi" class="block max-w-none size-full" src="http://localhost:3845/assets/21f5172b26530ba567c304a744c2ebd69e54d66f.svg" />
+                </div>
+                <div class="absolute contents right-[33.02px] top-1/2 -translate-y-1/2">
+                    <div class="absolute h-[13px] right-[33.02px] top-1/2 -translate-y-1/2 w-[26.978px]">
+                        <img alt="Battery" class="block max-w-none size-full" src="http://localhost:3845/assets/df6506c3dcb97260763eabb9f9d03cb855b0089d.svg" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="basis-0 flex flex-col grow items-center justify-end min-h-0 min-w-px pb-8 pt-[172px] px-8 relative shrink-0 w-full z-10" data-name="Content" data-node-id="15:3010">
+            <div class="flex flex-col gap-[44px] items-center relative shrink-0 w-full" data-name="Frame 48096048" data-node-id="15:3011">
+                <!-- Badge -->
+                <div class="flex items-center justify-center" data-name="Button" data-node-id="15:3012">
+                    <div class="success-badge" data-name="Text container" data-node-id="15:3013">
+                        <div class="success-badge-inner" data-name="Card - catégories" data-node-id="15:3014">
+                            <div aria-hidden="true" class="absolute inset-0 pointer-events-none rounded-[4750px]">
+                                <div class="absolute bg-[#f9f9fb] inset-0 rounded-[4750px]"></div>
+                                <div class="absolute inset-0 overflow-hidden rounded-[4750px]">
+                                    <img src="http://localhost:3845/assets/eeeee256c1d92acffac4bd640874b1f8e9283196.png" alt="Plaque badge" class="absolute h-[178.92%] left-[-13.63%] max-w-none top-[-40.44%] w-[124.34%]" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Text -->
+                <div class="flex flex-col gap-[10px] items-center justify-center px-8 py-0 relative shrink-0 text-center w-full" data-name="Top" data-node-id="15:3017">
+                    <h1 class="font-content font-extrabold leading-[1.1] relative shrink-0 text-[42px] text-[#24242e] text-center tracking-[-0.84px] w-full" data-node-id="15:3018">
+                        Félicitations !
+                    </h1>
+                    <p class="font-content font-normal leading-[1.6] relative shrink-0 text-base text-[#6d6d8a] text-center tracking-[-0.32px] w-full" data-node-id="15:3019">
+                        Tu as gagné la plaque du <span class="font-bold">soldat inconnu</span> !
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Bottom Button -->
+            <div class="flex flex-col items-center justify-center w-full mt-[128px]" data-name="Button" data-node-id="15:3020">
+                <button class="success-button" id="addToCollectionButton">
+                    Ajouter à ma collection
+                </button>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script src="success.js"></script>
+</body>
+</html>
+

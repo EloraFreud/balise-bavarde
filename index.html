@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PFE Cursor App - Map</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#24242e">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background-primary: #ffffff;
+            --background-secondary: #f9f9fb;
+            --content-primary: #24242e;
+            --content-secondary: #3e3e4e;
+            --content-quaternary: #b5b5c4;
+            --border-primary: #d7d7e0;
+            --border-secondary: #eeeef1;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Red Hat Display', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-secondary);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            width: 100%;
+        }
+        
+        .app-container {
+            width: 390px;
+            max-width: 100%;
+            height: 100vh;
+            max-height: 844px;
+            position: relative;
+            margin: 0 auto;
+            background: white;
+            overflow: hidden;
+        }
+        
+        @media (max-width: 390px) {
+            .app-container {
+                width: 100%;
+                max-height: 100vh;
+            }
+        }
+        
+        .font-content {
+            font-family: 'Red Hat Display', sans-serif;
+        }
+        
+        .font-system {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        .shadow-base {
+            box-shadow: 
+                6px 21px 9px 0px rgba(181, 181, 196, 0.01),
+                3px 12px 7px 0px rgba(181, 181, 196, 0.05),
+                2px 5px 5px 0px rgba(181, 181, 196, 0.08);
+        }
+        
+        .shadow-2xl {
+            box-shadow: 
+                6px 21px 9px 0px rgba(181, 181, 196, 0.06),
+                3px 12px 7px 0px rgba(181, 181, 196, 0.12),
+                3px 5px 5px 0px rgba(181, 181, 196, 0.16),
+                0px 1px 3px 0px rgba(181, 181, 196, 0.2);
+        }
+        
+        .shadow-navbar {
+            box-shadow: 
+                0px -138px 39px 0px rgba(215, 215, 224, 0),
+                0px -88px 35px 0px rgba(215, 215, 224, 0.01),
+                0px -50px 30px 0px rgba(215, 215, 224, 0.05),
+                0px -22px 22px 0px rgba(215, 215, 224, 0.09),
+                0px -6px 12px 0px rgba(215, 215, 224, 0.1);
+        }
+        
+        .map-background-container {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .map-image {
+            width: 230.24%;
+            height: 100%;
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        .map-pin {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            z-index: 10;
+        }
+        
+        .map-pin-button {
+            background: var(--background-primary);
+            border: 1px solid var(--border-primary);
+            border-radius: 1000px;
+            padding: 4px;
+            z-index: 2;
+        }
+        
+        .map-pin-arrow {
+            width: 12px;
+            height: 8px;
+            z-index: 1;
+            margin-top: -1px;
+        }
+        
+        .category-card {
+            width: 48px;
+            height: 48px;
+            border: 1.2px solid var(--border-secondary);
+            border-radius: 1200px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .category-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        .location-pin-large {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            transform: rotate(19.336deg);
+        }
+        
+        /* Remove all focus effects from search bar */
+        input[type="text"]:focus,
+        input[type="text"]:active {
+            outline: none !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+        
+        .search-bar-wrapper:focus-within {
+            outline: none !important;
+            box-shadow: 6px 21px 9px 0px rgba(181, 181, 196, 0.01),
+                        3px 12px 7px 0px rgba(181, 181, 196, 0.05),
+                        2px 5px 5px 0px rgba(181, 181, 196, 0.08) !important;
+        }
+        
+        /* Modal Styles */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(19, 18, 23, 0.8);
+            z-index: 40;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .modal-backdrop.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .modal {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 390px;
+            max-width: 100%;
+            background: #f9f9fb;
+            border-radius: 24px 24px 0 0;
+            box-shadow: 
+                6px 21px 9px 0px rgba(181, 181, 196, 0.01),
+                3px 12px 7px 0px rgba(181, 181, 196, 0.06),
+                3px 5px 5px 0px rgba(181, 181, 196, 0.12),
+                0px 1px 3px 0px rgba(181, 181, 196, 0.16);
+            z-index: 50;
+            transition: transform 0.3s ease;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal.active {
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        .modal-category-icon {
+            width: 150px;
+            height: 150px;
+            border: 3.75px solid #eeeef1;
+            border-radius: 3750px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-category-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        .modal-address-card {
+            background: white;
+            border: 1px solid #d7d7e0;
+            border-radius: 16px;
+            padding: 12px;
+            box-shadow: 
+                6px 21px 9px 0px rgba(181, 181, 196, 0.01),
+                2px 5px 5px 0px rgba(181, 181, 196, 0.08);
+        }
+        
+        .modal-info-card {
+            background: white;
+            border: 1px solid #d7d7e0;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 
+                6px 21px 9px 0px rgba(181, 181, 196, 0.01),
+                2px 5px 5px 0px rgba(181, 181, 196, 0.08);
+        }
+        
+        .modal-button {
+            background: linear-gradient(181.46deg, #24242e 7.38%, #09090b 92.62%);
+            border: 1px solid #131217;
+            border-radius: 16px;
+            padding: 12px 20px;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 0.28px;
+            text-transform: uppercase;
+            width: 100%;
+            cursor: pointer;
+            position: relative;
+            box-shadow: inset 0px 2px 0px 0px rgba(181, 181, 196, 0.16);
+        }
+        
+        .modal-button:hover {
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 390px) {
+            .modal {
+                width: 100%;
+                border-radius: 24px 24px 0 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-[#f9f9fb]">
+    <div class="app-container flex flex-col gap-px items-start overflow-hidden rounded-xl bg-white" data-name="Map" data-node-id="1:518">
+        <!-- Background Map Layer -->
+        <div aria-hidden="true" class="map-background-container pointer-events-none">
+            <div class="absolute bg-[#f9f9fb] inset-0"></div>
+            <div class="absolute inset-0 overflow-hidden">
+                <img alt="Map" class="map-image" src="http://localhost:3845/assets/292526d4a4f8c1811984a17683e556cd2d6407a9.png" />
+            </div>
+        </div>
+        
+        <!-- Header Section -->
+        <div class="bg-[#f9f9fb] flex flex-col items-start relative shrink-0 w-full z-10" data-node-id="1:519">
+            <!-- System Bar - iOS -->
+            <div class="h-[44px] relative shrink-0 w-full" data-name="System Bar - iOS/Black" data-node-id="1:520">
+                <div class="absolute flex flex-col font-system font-semibold justify-center leading-none left-[33px] text-[#15181f] text-base whitespace-nowrap top-1/2 -translate-y-1/2 tracking-[0.2px]" data-node-id="I1:520;17233:38615">
+                    <p class="leading-[1.4]">9:41</p>
+                </div>
+                <div class="absolute h-[10px] right-[86px] top-1/2 -translate-y-1/2 w-[18px]" data-name="Mobile Signal" data-node-id="I1:520;17233:38616">
+                    <img alt="Mobile Signal" class="block max-w-none size-full" src="http://localhost:3845/assets/3be1d84c217ea5d69fbf5b8c058423a8c3adeae5.svg" />
+                </div>
+                <div class="absolute h-[10.966px] right-[65.73px] top-1/2 -translate-y-1/2 w-[15.272px]" data-name="Wifi" data-node-id="I1:520;17233:38622">
+                    <img alt="Wifi" class="block max-w-none size-full" src="http://localhost:3845/assets/21f5172b26530ba567c304a744c2ebd69e54d66f.svg" />
+                </div>
+                <div class="absolute contents right-[33.02px] top-1/2 -translate-y-1/2" data-name="Battery" data-node-id="I1:520;17233:38627">
+                    <div class="absolute h-[13px] right-[33.02px] top-1/2 -translate-y-1/2 w-[26.978px]" data-name="Battery" data-node-id="I1:520;17233:38628">
+                        <img alt="Battery" class="block max-w-none size-full" src="http://localhost:3845/assets/df6506c3dcb97260763eabb9f9d03cb855b0089d.svg" />
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Search Bar Section -->
+            <div class="flex flex-col gap-0 items-start p-5 relative shrink-0 w-full" data-node-id="1:523">
+                <div class="flex flex-col gap-2 items-start p-0 relative shrink-0 w-full" data-name="SearchBar" data-node-id="1:633">
+                    <div class="search-bar-wrapper bg-white border border-[rgba(215,215,224,0.2)] flex gap-1 h-[56px] items-center pl-4 pr-3 py-3 relative rounded-xl shadow-base shrink-0 w-full" data-name="wrap" data-node-id="1:635">
+                        <div class="flex gap-0 items-center pl-0 pr-2 py-0 relative shrink-0" data-name="start adornment" data-node-id="1:636">
+                            <div class="flex gap-0 items-center justify-center p-0 relative shrink-0" data-name="_Icon" data-node-id="1:637">
+                                <div class="relative shrink-0 size-5" data-name="MagnifyingGlass" data-node-id="I1:637;1479:9004">
+                                    <div class="absolute inset-[9.29%_9.37%_9.37%_9.29%]" data-name="Vector" data-node-id="I1:637;1479:9004;7485:9530">
+                                        <img alt="Search" class="block max-w-none size-full" src="http://localhost:3845/assets/10eea4703efe1524bd8b91b46d643bd32271f289.svg" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input 
+                            type="text" 
+                            placeholder="Rechercher une ville..." 
+                            class="basis-0 font-content font-normal grow leading-[1.6] min-h-px min-w-px overflow-ellipsis overflow-hidden relative shrink-0 text-sm text-[#24242e] bg-transparent border-0 outline-none focus:outline-none focus:ring-0 focus:border-0 w-full" 
+                            data-node-id="1:638"
+                        />
+                        <div class="bg-white border border-[#d7d7e0] flex gap-0 items-center justify-center p-2 relative rounded-md shrink-0 cursor-pointer hover:bg-gray-50 transition-colors" data-name="Icon Button" data-node-id="1:643">
+                            <div class="flex gap-0 items-center justify-center p-0 relative shrink-0" data-name="_Icon" data-node-id="I1:643;3253:11130">
+                                <div class="relative shrink-0 size-4" data-name="SlidersHorizontal" data-node-id="I1:643;3253:11130;1479:9002">
+                                    <div class="absolute inset-[18.73%_12.5%]" data-name="Vector" data-node-id="I1:643;3253:11130;1479:9002;7485:4269">
+                                        <img alt="Filter" class="block max-w-none size-full" src="http://localhost:3845/assets/44de2f2f6a5ac2e011b1efcd948d896c1c4882a9.svg" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Map Content Area -->
+        <div class="basis-0 flex flex-col gap-4 grow items-start min-h-0 min-w-px pb-5 pt-4 px-6 relative shrink-0 w-full z-10" data-name="Button" data-node-id="1:525">
+            <div class="basis-0 grow min-h-0 min-w-px relative shrink-0 w-full h-full" data-node-id="1:526">
+                <!-- Map Pin 1 -->
+                <div class="map-pin" style="left: 52px; top: 372px;" data-name="Map Pin" data-node-id="1:527">
+                    <div class="map-pin-button" data-name="Button" data-node-id="1:528">
+                        <div class="category-card" data-name="Card - catégories" data-node-id="1:530">
+                            <img alt="Category" src="http://localhost:3845/assets/92e67d5e026f2c6a2561b61318ca661c39b77fc0.png" />
+                        </div>
+                    </div>
+                    <div class="map-pin-arrow" data-name="arrow" data-node-id="1:533">
+                        <img alt="Arrow" class="block max-w-none size-full" src="http://localhost:3845/assets/f06eec2b4fdee065f0047cef150848eea094739f.svg" />
+                    </div>
+                </div>
+                
+                <!-- Map Pin 2 -->
+                <div class="map-pin" style="left: 106px; top: 196px;" data-name="Map Pin" data-node-id="1:534">
+                    <div class="map-pin-button" data-name="Button" data-node-id="1:535">
+                        <div class="category-card" data-name="Card - catégories" data-node-id="1:537">
+                            <img alt="Category" src="http://localhost:3845/assets/eeeee256c1d92acffac4bd640874b1f8e9283196.png" />
+                        </div>
+                    </div>
+                    <div class="map-pin-arrow" data-name="arrow" data-node-id="1:540">
+                        <img alt="Arrow" class="block max-w-none size-full" src="http://localhost:3845/assets/f06eec2b4fdee065f0047cef150848eea094739f.svg" />
+                    </div>
+                </div>
+                
+                <!-- Map Pin 3 -->
+                <div class="map-pin" style="left: 275px; top: 280px;" data-name="Map Pin" data-node-id="1:541">
+                    <div class="map-pin-button" data-name="Button" data-node-id="1:542">
+                        <div class="category-card" data-name="Card - catégories" data-node-id="1:544">
+                            <img alt="Category" src="http://localhost:3845/assets/fd5c023f66ea105ae7d7ca26a2f24f71ea9066d7.png" />
+                        </div>
+                    </div>
+                    <div class="map-pin-arrow" data-name="arrow" data-node-id="1:547">
+                        <img alt="Arrow" class="block max-w-none size-full" src="http://localhost:3845/assets/f06eec2b4fdee065f0047cef150848eea094739f.svg" />
+                    </div>
+                </div>
+                
+                <!-- Location Pin (Large) -->
+                <div class="flex items-center justify-center location-pin-large" style="left: 144px; top: 320px;" data-name="Map Location Pin" data-node-id="1:654">
+                    <img alt="Location Pin" class="block max-w-none size-full" src="http://localhost:3845/assets/ef519baea9eefe7ce771b4d5345fb8a474060c47.svg" />
+                </div>
+            </div>
+            
+            <!-- Location Button -->
+            <div class="flex items-center justify-end relative shrink-0 w-full" data-name="Buttons" data-node-id="1:549">
+                <div class="bg-[#f9f9fb] border border-[#d7d7e0] flex gap-0 items-center justify-center p-3 relative rounded-lg shrink-0 cursor-pointer hover:bg-gray-100 transition-colors" data-name="Icon Button" data-node-id="1:550">
+                    <div class="flex gap-0 items-center justify-center p-0 relative shrink-0" data-name="_Icon" data-node-id="I1:550;1725:17514">
+                        <div class="relative shrink-0 size-4" data-name="MapPin" data-node-id="I1:550;1725:17514;1479:9002">
+                            <div class="absolute inset-[6.25%_15.63%]" data-name="Vector" data-node-id="I1:550;1725:17514;1479:9002;7485:2769">
+                                <img alt="Map Pin" class="block max-w-none size-full" src="http://localhost:3845/assets/37e4bb6042f9c45c0b17ce64d4fe0f31ff22a11b.svg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Navigation Bar -->
+        <div class="bg-white h-[84px] relative rounded-t-3xl shadow-navbar shrink-0 w-full z-20" data-name="NavBar" data-node-id="1:551">
+            <div class="absolute flex items-center left-0 pb-4 pt-3 px-6 right-0 rounded-t-2xl top-[1.99px]" data-name="Menu" data-node-id="1:552">
+                <div class="basis-0 flex grow items-center justify-between min-h-px min-w-px relative shrink-0" data-name="List" data-node-id="1:553">
+                    <!-- Carte (Active) -->
+                    <div class="flex flex-col gap-0.5 items-center relative shrink-0 w-16 cursor-pointer" data-name="Item" data-node-id="1:554">
+                        <div class="flex items-center justify-center relative shrink-0 size-8" data-name="Icon Container" data-node-id="I1:554;17385:11607">
+                            <div class="relative shrink-0 size-6" data-name="MapTrifold" data-node-id="I1:554;17385:11697">
+                                <div class="absolute inset-[12.5%_9.38%]" data-name="Vector" data-node-id="I1:554;17385:11697;7485:2797">
+                                    <img alt="Map" class="block max-w-none size-full" src="http://localhost:3845/assets/702da46363699b51909dd03381d5a24adfa13296.svg" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col font-content font-normal justify-center leading-none relative shrink-0 text-[0px] text-[#24242e] whitespace-nowrap tracking-[-0.12px]" data-node-id="I1:554;17385:11609">
+                            <p class="font-bold leading-[1.5] text-[#24242e] text-xs">Carte</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Scan -->
+                    <a href="scan.html" class="flex flex-col gap-0.5 items-center relative shrink-0 w-16 cursor-pointer nav-item" data-name="Item" data-node-id="1:555">
+                        <div class="flex items-center justify-center relative shrink-0 size-8" data-name="Icon Container" data-node-id="I1:555;17385:11596">
+                            <div class="relative shrink-0 size-6" data-name="Scan" data-node-id="I1:555;17385:11684">
+                                <div class="absolute inset-[12.5%]" data-name="Vector" data-node-id="I1:555;17385:11684;7485:9774">
+                                    <img alt="Scan" class="block max-w-none size-full" src="http://localhost:3845/assets/4ba23076efd2b16b5d5571dc06b57b075829dff8.svg" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col font-content font-normal justify-center leading-none relative shrink-0 text-[#2f2c36] text-[0px] whitespace-nowrap tracking-[-0.12px]" data-node-id="I1:555;17385:11598">
+                            <p class="font-bold leading-[1.5] text-[#b5b5c4] text-xs">Scan</p>
+                        </div>
+                    </a>
+                    
+                    <!-- Collection -->
+                    <div class="flex flex-col gap-0.5 items-center relative shrink-0 w-16 cursor-pointer nav-item" data-name="Item" data-node-id="1:556">
+                        <div class="flex items-center justify-center relative shrink-0 size-8" data-name="Icon Container" data-node-id="I1:556;17385:11607">
+                            <div class="relative shrink-0 size-6" data-name="CircleHalf" data-node-id="I1:556;17385:11697">
+                                <div class="absolute inset-[9.38%_9.38%_9.37%_9.37%]" data-name="Vector" data-node-id="I1:556;17385:11697;7485:5870">
+                                    <img alt="Collection" class="block max-w-none size-full" src="http://localhost:3845/assets/964f7bfc611cda035b6098e680d57e5d786131dd.svg" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col font-content font-normal justify-center leading-none relative shrink-0 text-[#2f2c36] text-[0px] whitespace-nowrap tracking-[-0.12px]" data-node-id="I1:556;17385:11609">
+                            <p class="font-bold leading-[1.5] text-[#b5b5c4] text-xs">Collection</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Profil -->
+                    <div class="flex flex-col gap-0.5 items-center relative shrink-0 w-16 cursor-pointer nav-item" data-name="Item" data-node-id="1:557">
+                        <div class="flex items-center justify-center relative shrink-0 size-8" data-name="Icon Container" data-node-id="I1:557;17385:11607">
+                            <div class="flex gap-0 items-center justify-center p-0 relative shrink-0" data-name="_Icon" data-node-id="I1:557;17385:11697">
+                                <div class="relative shrink-0 size-6" data-name="UserCircle" data-node-id="I1:557;17385:11697;1479:9006">
+                                    <div class="absolute inset-[9.38%_9.38%_9.37%_9.37%]" data-name="Vector" data-node-id="I1:557;17385:11697;1479:9006;7485:16224">
+                                        <img alt="Profile" class="block max-w-none size-full" src="http://localhost:3845/assets/f238c17531a369020dc4bde2e5098b48e6efa041.svg" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col font-content font-normal justify-center leading-none relative shrink-0 text-[#2f2c36] text-[0px] whitespace-nowrap tracking-[-0.12px]" data-node-id="I1:557;17385:11609">
+                            <p class="font-system font-bold leading-[1.5] text-[#b5b5c4] text-xs">Profil</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal -->
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal" id="pinModal">
+        <!-- Modal Header -->
+        <div class="flex items-start justify-between pb-[10px] pl-8 pr-6 pt-8 relative shrink-0 w-full" data-name="Title" data-node-id="5:577">
+            <div class="flex gap-0 items-center justify-center p-3 rounded-lg shrink-0"></div>
+            <div class="bg-white border border-[#eeeef1] flex gap-0 items-center justify-center p-1 relative rounded-full shadow-2xl shrink-0" data-name="Button" data-node-id="5:579">
+                <div class="flex flex-col items-center justify-center pl-0 pr-0 py-0 relative shrink-0" data-name="Text container" data-node-id="5:580">
+                    <div class="modal-category-icon" data-name="Card - catégories" data-node-id="5:581" id="modalCategoryIcon">
+                        <img alt="Category" src="http://localhost:3845/assets/eeeee256c1d92acffac4bd640874b1f8e9283196.png" />
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white border border-[#eeeef1] flex gap-0 items-center justify-center p-3 relative rounded-lg shrink-0 cursor-pointer hover:bg-gray-50 transition-colors" data-name="Icon Button" data-node-id="5:584" id="closeModalBtn">
+                <div class="flex gap-0 items-center justify-center p-0 relative shrink-0" data-name="_Icon" data-node-id="I5:584;1725:17512">
+                    <div class="relative shrink-0 size-4" data-name="X" data-node-id="I5:584;1725:17512;1479:9002">
+                        <div class="absolute inset-[18.75%]" data-name="Vector" data-node-id="I5:584;1725:17512;1479:9002;7485:17655">
+                            <img alt="Close" class="block max-w-none size-full" src="http://localhost:3845/assets/4ef2f01557f46913387ba86c120438c9cb4838e4.svg" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal Content -->
+        <div class="flex flex-col gap-6 items-center pb-8 pt-3 px-8 relative rounded-3xl shrink-0 w-full" data-name="Modale" data-node-id="5:585">
+            <div class="flex flex-col gap-2 items-center relative shrink-0 w-[230px]" data-node-id="5:586">
+                <p class="font-content font-extrabold leading-[1.2] relative shrink-0 text-xl text-[#24242e] whitespace-nowrap tracking-[-0.6px]" data-node-id="5:587" id="modalTitle">
+                    Le soldat inconnu
+                </p>
+                <p class="font-content font-normal leading-[1.6] min-w-full relative shrink-0 text-sm text-[#3e3e4e] text-center w-[min-content]" data-node-id="5:588" id="modalDescription">
+                    La plaque du Soldat inconnu et cette flamme qui ne s'éteint jamais !
+                </p>
+            </div>
+            <div class="flex flex-col gap-4 items-start relative shrink-0 w-full" data-node-id="5:589">
+                <!-- Address Card -->
+                <div class="modal-address-card flex gap-3 items-center p-3 relative shrink-0 w-full" data-name="Adresse" data-node-id="5:590">
+                    <div class="bg-[#f9f9fb] border border-[#eeeef1] flex flex-col h-9 items-start justify-center overflow-hidden relative rounded-md shrink-0" data-name="Card - catégories" data-node-id="I5:590;17502:20002">
+                        <div class="flex gap-0 items-center justify-center p-2 relative shrink-0" data-name="_Icon" data-node-id="I5:590;17502:20003">
+                            <div class="relative shrink-0 size-5" data-name="MapPin" data-node-id="I5:590;17502:20003;1479:9004">
+                                <div class="absolute inset-[6.25%_15.63%]" data-name="Vector" data-node-id="I5:590;17502:20003;1479:9004;7485:2769">
+                                    <img alt="Location" class="block max-w-none size-full" src="http://localhost:3845/assets/139157c83076e915201658956b036e2db28f946a.svg" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="basis-0 flex flex-col gap-1 grow items-start justify-center min-h-px min-w-px relative shrink-0" data-name="Content" data-node-id="I5:590;17502:20004">
+                        <p class="font-content font-bold leading-[1.6] relative shrink-0 text-sm text-[#24242e] w-full" data-node-id="I5:590;17502:20005" id="modalAddress">
+                            Pl. Charles de Gaulle, 75008 Paris
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Info Card -->
+                <div class="modal-info-card flex flex-col gap-3 items-start justify-center overflow-hidden relative shrink-0 w-full" data-name="Web/Alert" data-node-id="5:591">
+                    <div class="flex items-center relative shrink-0 w-full" data-node-id="5:592">
+                        <div class="basis-0 flex flex-col gap-0.5 grow items-start justify-center min-h-px min-w-px relative shrink-0" data-node-id="5:593">
+                            <p class="font-content font-bold leading-[1.4] relative shrink-0 text-sm text-[#24242e] tracking-[-0.28px] w-full" data-node-id="5:594">
+                                Comment la trouver ?
+                            </p>
+                            <p class="font-content font-normal leading-[1.5] relative shrink-0 text-xs text-[#3e3e4e] tracking-[-0.12px] w-full" data-node-id="5:595">
+                                Rendez-vous au pied de l'arc de triomphe
+                            </p>
+                        </div>
+                    </div>
+                    <p class="font-content font-bold leading-[1.4] min-w-full relative shrink-0 text-xs text-[#6d6d8a] tracking-[-0.12px] w-[min-content] cursor-pointer hover:underline" data-node-id="5:596">
+                        Signaler un problème ?
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal Button -->
+        <div class="bg-[#eeeef1] flex flex-col items-center justify-center p-8 relative shrink-0 w-full" data-name="Button" data-node-id="5:599">
+            <button class="modal-button" data-name="Button" data-node-id="5:600" id="scanButton">
+                Scanner la plaque
+            </button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

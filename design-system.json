@@ -1,0 +1,205 @@
+{
+  "name": "PFE Cursor App Design System",
+  "version": "1.0.0",
+  "description": "Design system based on Figma variables for consistent design implementation",
+  "colors": {
+    "background": {
+      "primary": "#ffffff",
+      "secondary": "#f9f9fb"
+    },
+    "content": {
+      "primary": "#24242e",
+      "secondary": "#3e3e4e",
+      "quaternary": "#b5b5c4"
+    },
+    "border": {
+      "primary": "#d7d7e0",
+      "secondary": "#eeeef1"
+    },
+    "mirage": {
+      "500": "#6d6d8a",
+      "700": "#49485c",
+      "900": "#363544"
+    },
+    "shadow": {
+      "1%": "#b5b5c403",
+      "5%": "#b5b5c40d",
+      "6%": "#b5b5c40f",
+      "8%": "#b5b5c414",
+      "12%": "#b5b5c41f",
+      "16%": "#b5b5c429",
+      "20%": "#b5b5c433"
+    },
+    "gradient": {
+      "mirage700to900": {
+        "start": "#49485c",
+        "end": "#363544"
+      },
+      "mirage950to1050": {
+        "start": "#09090b",
+        "end": "#24242e"
+      },
+      "btnInputSecondary": {
+        "start": "#24242e",
+        "end": "#09090b"
+      }
+    }
+  },
+  "spacing": {
+    "0": "0px",
+    "0.5": "2px",
+    "1": "4px",
+    "2": "8px",
+    "2.5": "10px",
+    "3": "12px",
+    "4": "16px",
+    "5": "20px",
+    "6": "24px"
+  },
+  "borderRadius": {
+    "none": "0",
+    "base": "6px",
+    "lg": "8px",
+    "xl": "12px",
+    "full": "1000px",
+    "3xl": "24px"
+  },
+  "typography": {
+    "fontFamily": {
+      "content": "Red Hat Display, sans-serif",
+      "system": "Plus Jakarta Sans, sans-serif"
+    },
+    "paragraph": {
+      "tiny": {
+        "fontFamily": "Content",
+        "fontSize": "12px",
+        "fontWeight": 400,
+        "lineHeight": 1.5,
+        "letterSpacing": "-0.12px"
+      },
+      "small": {
+        "fontFamily": "Content",
+        "fontSize": "14px",
+        "fontWeight": 400,
+        "lineHeight": 1.6,
+        "letterSpacing": "0"
+      }
+    }
+  },
+  "shadows": {
+    "base": {
+      "type": "drop-shadow",
+      "layers": [
+        {
+          "color": "rgba(181, 181, 196, 0.01)",
+          "offset": { "x": 6, "y": 21 },
+          "radius": 9,
+          "spread": 0
+        },
+        {
+          "color": "rgba(181, 181, 196, 0.05)",
+          "offset": { "x": 3, "y": 12 },
+          "radius": 7,
+          "spread": 0
+        },
+        {
+          "color": "rgba(181, 181, 196, 0.08)",
+          "offset": { "x": 2, "y": 5 },
+          "radius": 5,
+          "spread": 0
+        }
+      ]
+    },
+    "2xl": {
+      "type": "drop-shadow",
+      "layers": [
+        {
+          "color": "rgba(181, 181, 196, 0.06)",
+          "offset": { "x": 6, "y": 21 },
+          "radius": 9,
+          "spread": 0
+        },
+        {
+          "color": "rgba(181, 181, 196, 0.12)",
+          "offset": { "x": 3, "y": 12 },
+          "radius": 7,
+          "spread": 0
+        },
+        {
+          "color": "rgba(181, 181, 196, 0.16)",
+          "offset": { "x": 3, "y": 5 },
+          "radius": 5,
+          "spread": 0
+        },
+        {
+          "color": "rgba(181, 181, 196, 0.2)",
+          "offset": { "x": 0, "y": 1 },
+          "radius": 3,
+          "spread": 0
+        }
+      ]
+    },
+    "navbar": {
+      "type": "drop-shadow",
+      "layers": [
+        {
+          "color": "rgba(215, 215, 224, 0)",
+          "offset": { "x": 0, "y": -138 },
+          "radius": 39,
+          "spread": 0
+        },
+        {
+          "color": "rgba(215, 215, 224, 0.01)",
+          "offset": { "x": 0, "y": -88 },
+          "radius": 35,
+          "spread": 0
+        },
+        {
+          "color": "rgba(215, 215, 224, 0.05)",
+          "offset": { "x": 0, "y": -50 },
+          "radius": 30,
+          "spread": 0
+        },
+        {
+          "color": "rgba(215, 215, 224, 0.09)",
+          "offset": { "x": 0, "y": -22 },
+          "radius": 22,
+          "spread": 0
+        },
+        {
+          "color": "rgba(215, 215, 224, 0.1)",
+          "offset": { "x": 0, "y": -6 },
+          "radius": 12,
+          "spread": 0
+        }
+      ]
+    }
+  },
+  "components": {
+    "searchBar": {
+      "height": "56px",
+      "padding": {
+        "x": "16px",
+        "y": "12px"
+      },
+      "borderRadius": "12px",
+      "shadow": "base"
+    },
+    "mapPin": {
+      "size": "48px",
+      "borderWidth": "1.2px",
+      "shadow": "2xl"
+    },
+    "iconButton": {
+      "size": "32px",
+      "padding": "12px"
+    },
+    "navbar": {
+      "height": "84px",
+      "borderRadius": {
+        "top": "24px"
+      },
+      "shadow": "navbar"
+    }
+  }
+}
