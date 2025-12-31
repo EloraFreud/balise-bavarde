@@ -1,0 +1,60 @@
+{
+  "_comment": "Ce fichier contient les données des plaques. Vous pouvez éditer le contenu de chaque plaque (titre, description, durée audio, quiz, etc.). Le système chargera automatiquement les bonnes données selon la plaque scannée.",
+  "plaques": [
+    {
+      "id": "soldat-inconnu",
+      "title": "Le soldat inconnu",
+      "icon": "assets/Plaque-1.png",
+      "description": "Devant toi, la dalle du Soldat inconnu et cette flamme qui ne s'éteint jamais. Elle brûle depuis 1923. Chaque soir, à 18h30, une association vient la raviver. C'est un geste simple — une torche, quelques mots, parfois une sonnerie — mais il se répète tous les jours. C'est l'idée de ce monument : un souvenir qui ne devient pas un décor, un hommage qui vit grâce à un rituel.\n\nSous l'arc de triomphe repose un soldat non identifié de la Première Guerre mondiale, transféré ici en 1921. On a voulu que son identité soit inconnue pour qu'il représente tous les disparus.",
+      "audioDuration": "1 MIN 30",
+      "quizAnswer": "18h30",
+      "quiz": {
+        "question": "À quelle heure la flamme du Soldat inconnu est-elle ravivée chaque jour ?",
+        "answers": [
+          "11h00",
+          "14h30",
+          "18h30",
+          "20h00"
+        ],
+        "correctAnswer": "18h30"
+      }
+    },
+    {
+      "id": "sous-vos-pieds",
+      "title": "Sous vos pieds",
+      "icon": "assets/Plaque-3.png",
+      "description": "Eau de Paris : un réseau invisible qui tient la ville éveillée. Sous vos pieds, des kilomètres de canalisations transportent l'eau qui alimente chaque foyer, chaque fontaine, chaque parc. Un système complexe et essentiel, souvent oublié mais toujours présent.\n\nCette plaque commémore l'importance de l'eau dans notre quotidien et le travail invisible de ceux qui maintiennent ce réseau vital pour la ville.",
+      "audioDuration": "2 MIN 15",
+      "quizAnswer": "Eau de Paris",
+      "quiz": {
+        "question": "Quel est le nom de l'entreprise publique qui gère l'eau à Paris ?",
+        "answers": [
+          "Veolia Eau",
+          "Eau de Paris",
+          "Suez Environnement",
+          "Lyonnaise des Eaux"
+        ],
+        "correctAnswer": "Eau de Paris"
+      }
+    },
+    {
+      "id": "etoile-douze-avenues",
+      "title": "Une étoile, douze avenues",
+      "icon": "assets/Plaque-2.png",
+      "description": "Une étoile, douze avenues : la mémoire de la France rayonne. Depuis la place de l'Étoile, douze grandes avenues partent en éventail, créant un symbole architectural unique. Chaque avenue raconte une partie de l'histoire de Paris et de la France.\n\nCette configuration urbaine exceptionnelle témoigne de la vision grandiose de l'urbanisme parisien et de son héritage historique.",
+      "audioDuration": "1 MIN 45",
+      "quizAnswer": "12",
+      "quiz": {
+        "question": "Combien d'avenues partent de la place de l'Étoile ?",
+        "answers": [
+          "8",
+          "10",
+          "12",
+          "14"
+        ],
+        "correctAnswer": "12"
+      }
+    }
+  ]
+}
+

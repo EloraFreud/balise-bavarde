@@ -168,10 +168,68 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // Variable pour stocker les données des plaques
+    let plaquesData = null;
+    
+    // Fonction pour charger les données des plaques
+    async function loadPlaquesData() {
+        if (plaquesData) {
+            return plaquesData;
+        }
+        
+        try {
+            const response = await fetch('plaques-data.json');
+            const data = await response.json();
+            plaquesData = data.plaques;
+            return plaquesData;
+        } catch (error) {
+            console.error('Erreur lors du chargement des données des plaques:', error);
+            // Retourner des données par défaut en cas d'erreur
+            return [{
+                id: "soldat-inconnu",
+                title: "Le soldat inconnu",
+                icon: "assets/Plaque-1.png",
+                description: "Devant toi, la dalle du Soldat inconnu et cette flamme qui ne s'éteint jamais. Elle brûle depuis 1923. Chaque soir, à 18h30, une association vient la raviver. C'est un geste simple — une torche, quelques mots, parfois une sonnerie — mais il se répète tous les jours. C'est l'idée de ce monument : un souvenir qui ne devient pas un décor, un hommage qui vit grâce à un rituel.\n\nSous l'arc de triomphe repose un soldat non identifié de la Première Guerre mondiale, transféré ici en 1921. On a voulu que son identité soit inconnue pour qu'il représente tous les disparus.",
+                audioDuration: "1 MIN 30",
+                quizAnswer: "18h30"
+            }];
+        }
+    }
+    
+    // Fonction pour trouver la plaque par titre ou par icône (fallback)
+    function findPlaqueByTitle(plaqueTitle, plaques) {
+        // D'abord chercher par titre exact
+        let plaque = plaques.find(plaque => plaque.title === plaqueTitle);
+        
+        // Si pas trouvé, essayer de trouver par correspondance partielle
+        if (!plaque) {
+            plaque = plaques.find(plaque => 
+                plaque.title.toLowerCase().includes(plaqueTitle.toLowerCase()) ||
+                plaqueTitle.toLowerCase().includes(plaque.title.toLowerCase())
+            );
+        }
+        
+        // Si toujours pas trouvé, utiliser la première plaque par défaut
+        return plaque || plaques[0];
+    }
+    
+    // Fonction pour formater la description avec des paragraphes
+    function formatDescription(description) {
+        const paragraphs = description.split('\n\n');
+        return paragraphs.map(p => `<p>${p}</p>`).join('\n');
+    }
+    
     // Fonction pour afficher l'écran d'informations sur la plaque
-    function showPlaqueInfo(imageUrl) {
+    async function showPlaqueInfo(imageUrl) {
         // Désactiver la caméra
         deactivateCamera();
+        
+        // Charger les données des plaques
+        const plaques = await loadPlaquesData();
+        
+        // Identifier la plaque à afficher (par titre depuis URL ou par défaut)
+        const plaqueTitle = title || 'Le soldat inconnu';
+        const plaque = findPlaqueByTitle(plaqueTitle, plaques);
         
         // Créer l'écran d'informations
         const infoScreen = document.createElement('div');
@@ -183,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="plaque-info-header">
                     <div class="plaque-info-spacer"></div>
                     <button class="plaque-info-close" id="closeInfoScreen">
-                        <img src="http://localhost:3845/assets/8241868549c082ec4b85ccb0abf805e6a3eb5052.svg" alt="Close" />
+                        <img src="assets/icons/X.png" alt="Close" />
                     </button>
                 </div>
                 
@@ -194,21 +252,19 @@ document.addEventListener('DOMContentLoaded', function() {
                         <!-- Icon positioned absolutely on top of card -->
                         <div class="plaque-info-icon-absolute">
                             <div class="plaque-info-icon">
-                                <img src="http://localhost:3845/assets/eeeee256c1d92acffac4bd640874b1f8e9283196.png" alt="Plaque" />
+                                <img src="${plaque.icon}" alt="Plaque" />
                             </div>
                         </div>
                         
                         <div class="plaque-info-text">
-                            <h1 class="plaque-info-title" id="plaqueTitle">Le soldat inconnu</h1>
+                            <h1 class="plaque-info-title" id="plaqueTitle">${plaque.title}</h1>
                             <div class="plaque-info-description" id="plaqueDescription">
-                                <p>Devant toi, la dalle du Soldat inconnu et cette flamme qui ne s'éteint jamais. Elle brûle depuis 1923. Chaque soir, à 18h30, une association vient la raviver. C'est un geste simple — une torche, quelques mots, parfois une sonnerie — mais il se répète tous les jours. C'est l'idée de ce monument : un souvenir qui ne devient pas un décor, un hommage qui vit grâce à un rituel.</p>
-                                <p>&nbsp;</p>
-                                <p>Sous l'arc de triomphe repose un soldat non identifié de la Première Guerre mondiale, transféré ici en 1921. On a voulu que son identité soit inconnue pour qu'il représente tous les disparus.</p>
+                                ${formatDescription(plaque.description)}
                             </div>
                         </div>
                         <button class="plaque-info-audio" id="audioButton">
-                            <img src="http://localhost:3845/assets/1f7216c4411c09ff4927da9ca81097ab6382056f.svg" alt="Play" />
-                            <span>1 MIN 30</span>
+                            <img src="assets/icons/PlayPause.svg" alt="Play" />
+                            <span>${plaque.audioDuration}</span>
                         </button>
                     </div>
                 </div>
@@ -446,11 +502,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         document.getElementById('nextButton').addEventListener('click', () => {
             console.log('Bouton Suivant cliqué');
-            // Naviguer vers le quiz
-            const title = document.getElementById('plaqueTitle').textContent;
+            // Naviguer vers le quiz avec l'ID de la plaque pour garder la trace
+            const plaqueTitle = document.getElementById('plaqueTitle').textContent;
             document.body.removeChild(infoScreen);
             URL.revokeObjectURL(imageUrl);
-            window.location.href = `quiz.html?plaque=${encodeURIComponent(title)}`;
+            window.location.href = `quiz.html?plaque=${encodeURIComponent(plaqueTitle)}&plaqueId=${encodeURIComponent(plaque.id)}`;
         });
         
         document.getElementById('audioButton').addEventListener('click', () => {

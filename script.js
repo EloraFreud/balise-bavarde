@@ -75,22 +75,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Pin data - you can customize this for each pin
     const pinData = {
         '1:527': {
-            title: 'Le soldat inconnu',
-            description: 'La plaque du Soldat inconnu et cette flamme qui ne s\'éteint jamais !',
-            address: 'Pl. Charles de Gaulle, 75008 Paris',
-            icon: 'http://localhost:3845/assets/92e67d5e026f2c6a2561b61318ca661c39b77fc0.png'
+            title: 'Sous vos pieds',
+            description: 'Eau de Paris : un réseau invisible qui tient la ville éveillée.',
+            address: '156-170 Av. des Champs-Élysées, 75008 Paris',
+            icon: 'assets/Plaque-3.png'
         },
         '1:534': {
             title: 'Le soldat inconnu',
             description: 'La plaque du Soldat inconnu et cette flamme qui ne s\'éteint jamais !',
             address: 'Pl. Charles de Gaulle, 75008 Paris',
-            icon: 'http://localhost:3845/assets/eeeee256c1d92acffac4bd640874b1f8e9283196.png'
+            icon: 'assets/Plaque-1.png'
         },
         '1:541': {
-            title: 'Le soldat inconnu',
-            description: 'La plaque du Soldat inconnu et cette flamme qui ne s\'éteint jamais !',
-            address: 'Pl. Charles de Gaulle, 75008 Paris',
-            icon: 'http://localhost:3845/assets/fd5c023f66ea105ae7d7ca26a2f24f71ea9066d7.png'
+            title: 'Une étoile, douze avenues',
+            description: 'Une étoile, douze avenues : la mémoire de la France rayonne.',
+            address: '67 Av. d\'Iéna, 75116 Paris',
+            icon: 'assets/Plaque-2.png'
         }
     };
     
