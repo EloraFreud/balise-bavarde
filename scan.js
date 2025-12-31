@@ -336,6 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
+                    justify-content: center;
                     padding: 24px;
                     position: relative;
                     z-index: 1;
@@ -349,7 +350,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     border-radius: 24px;
                     padding: 96px 24px 24px;
                     width: 100%;
-                    height: 100%;
                     box-shadow: 
                         6px 21px 9px 0px rgba(181, 181, 196, 0.01),
                         2px 5px 5px 0px rgba(181, 181, 196, 0.08);
@@ -358,7 +358,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     display: flex;
                     flex-direction: column;
                     justify-content: space-between;
-                    flex-grow: 1;
                 }
                 
                 .plaque-info-icon-absolute {
@@ -415,6 +414,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 .plaque-info-description {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 16px;
                     font-family: 'Red Hat Display', sans-serif;
                     font-weight: 400;
                     font-size: 16px;

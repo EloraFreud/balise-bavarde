@@ -23,25 +23,25 @@
       "id": "sous-vos-pieds",
       "title": "Sous vos pieds",
       "icon": "assets/Plaque-3.png",
-      "description": "Eau de Paris : un réseau invisible qui tient la ville éveillée. Sous vos pieds, des kilomètres de canalisations transportent l'eau qui alimente chaque foyer, chaque fontaine, chaque parc. Un système complexe et essentiel, souvent oublié mais toujours présent.\n\nCette plaque commémore l'importance de l'eau dans notre quotidien et le travail invisible de ceux qui maintiennent ce réseau vital pour la ville.",
-      "audioDuration": "2 MIN 15",
+      "description": "Cette plaque c’est la porte d’un autre Paris. Au XIXᵉ siècle, on décide de remettre la ville en ordre. Georges-Eugène Haussmann refait rues et boulevards en surface ; son ingénieur de l’eau, Eugène Belgrand, organise ce qu’on ne voit pas : un réseau d’égouts propre, ventilé, visitable, qui suit les grands axes. Résultat : aujourd’hui, Paris, c’est des milliers de kilomètres de galeries où circulent eaux de pluie et eaux usées, avec des équipes qui descendent chaque jour pour entretenir, curer, surveiller.",
+      "audioDuration": "55 sec",
       "quizAnswer": "Eau de Paris",
       "quiz": {
-        "question": "Quel est le nom de l'entreprise publique qui gère l'eau à Paris ?",
+        "question": "Quel ingénieur, aux côtés d’Haussmann, a organisé le réseau moderne des égouts parisiens au XIXᵉ siècle ?",
         "answers": [
-          "Veolia Eau",
-          "Eau de Paris",
-          "Suez Environnement",
-          "Lyonnaise des Eaux"
+          "Gustave Eiffel",
+          "Eugène Belgrand",
+          "Viollet-le-Duc",
+          "Louis Pasteur"
         ],
-        "correctAnswer": "Eau de Paris"
+        "correctAnswer": "Eugène Belgrand"
       }
     },
     {
       "id": "etoile-douze-avenues",
       "title": "Une étoile, douze avenues",
       "icon": "assets/Plaque-2.png",
-      "description": "Une étoile, douze avenues : la mémoire de la France rayonne. Depuis la place de l'Étoile, douze grandes avenues partent en éventail, créant un symbole architectural unique. Chaque avenue raconte une partie de l'histoire de Paris et de la France.\n\nCette configuration urbaine exceptionnelle témoigne de la vision grandiose de l'urbanisme parisien et de son héritage historique.",
+      "description": "L’Arc est décidé par Napoléon en 1806 après Austerlitz : “Élever un arc pour les armées”. Commencé sous l’Empire, il sera inauguré en 1836. Ensuite, il devient une scène : défilés de 1919, passage des troupes allemandes en 1940, marche de la Libération en 1944 avec le Général De Gaulle, et des commémorations qui rythment encore le calendrier. \n\nAutour, les douze avenues rayonnent comme les branches d’une étoile — d’où le nom ancien, “Étoile”. Leurs noms ne sont pas un hasard : Kléber, Foch, Wagram, Hoche… maréchaux, batailles, grandes figures.",
       "audioDuration": "1 MIN 45",
       "quizAnswer": "12",
       "quiz": {
