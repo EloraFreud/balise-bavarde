@@ -124,6 +124,10 @@
             min-width: 60px;
             min-height: 60px;
         }
+
+        .camera-placeholder {
+            background: var(--background-secondary);
+        }
     </style>
 </head>
 <body class="bg-[#f9f9fb]">
@@ -136,8 +140,8 @@
                 <button class="bg-white border border-[#eeeef1] flex gap-0 items-center justify-center p-3 relative rounded-lg shrink-0 cursor-pointer hover:bg-gray-50 transition-colors" id="backButton">
                     <div class="flex gap-0 items-center justify-center p-0 relative shrink-0">
                         <div class="relative shrink-0 size-4">
-                            <div class="absolute inset-[15.62%_34.37%_15.62%_28.12%]">
-                                <img alt="Back" class="block max-w-none size-full" src="http://localhost:3845/assets/c4a96756626c860f585ea3830133f8295fdb4c0e.svg" />
+                            <div class="absolute">
+                                <img alt="Back" class="block max-w-none size-full" src="assets/icons/CaretLeft.svg" />
                             </div>
                         </div>
                     </div>
@@ -152,8 +156,7 @@
         <!-- Main Content Area - Camera Placeholder -->
         <div class="basis-0 flex flex-col grow items-start min-h-0 min-w-px pb-5 pt-6 px-6 relative shrink-0 w-full" data-name="Main" data-node-id="6:802">
             <div class="border border-[#d7d7e0] relative rounded-3xl shrink-0 w-full h-full camera-placeholder" data-node-id="6:803" id="cameraPlaceholder">
-                <div aria-hidden="true" class="absolute inset-0 pointer-events-none rounded-3xl">
-                    <img alt="Camera Placeholder" class="absolute max-w-none object-center object-cover rounded-3xl size-full opacity-0" src="http://localhost:3845/assets/ece298d0ec2c16f10310d45724b276a6035cb503.png" />
+                <div aria-hidden="true" class="absolute inset-0 pointer-events-none rounded-3xl camera-placeholder">
                 </div>
             </div>
         </div>
