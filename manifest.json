@@ -1,6 +1,6 @@
 {
-  "name": "Balise Bavarde",
-  "short_name": "Balise Bavarde",
+  "name": "Lidly",
+  "short_name": "Lidly",
   "description": "Application de scan et cartographie pour plaques commémoratives",
   "start_url": "/",
   "display": "standalone",
