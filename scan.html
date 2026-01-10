@@ -399,11 +399,11 @@
                 const topPrediction = prediction.reduce((prev, current) => (prev.probability > current.probability) ? prev : current);
 
                 switch (topPrediction.className) {
-                    case 'OK':
+                    case 'SOLDAT':
                         return 'Le soldat inconnu';
-                    case 'PAS OK':
+                    case 'EAU':
                         return 'Sous vos pieds';
-                    case 'MOUAIS':
+                    case 'ETOILE':
                         return 'Une étoile, douze avenues';
                     default:
                         return undefined;
